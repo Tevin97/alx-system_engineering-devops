@@ -13,8 +13,8 @@ frontend tevinmurimiweb
 
 backend app
     balance roundrobin
-    server 1542-web-01 34.73.222.49:80 check
-    server 1542-web-02 54.82.121.70:80 check" | sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null
+    server 326003-web-01 54.198.64.137:80 check
+    server 326003-web-02 34.239.248.120:80 check" | sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null
 
 # Restart HAProxy service
 sudo service haproxy restart

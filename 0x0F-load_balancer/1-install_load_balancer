@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Install your load balancer
+sudo apt-get -y update
+sudo apt-get -y install haproxy
+
+# Add configuration to haproxy.cfg
+echo "
+frontend tevinmurimiweb
+    bind *:80
+    mode http
+    default_backend app
+
+backend app
+    balance roundrobin
+    server 1542-web-01 34.73.222.49:80 check
+    server 1542-web-02 54.82.121.70:80 check" | sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null
+
+# Restart HAProxy service
+sudo service haproxy restart

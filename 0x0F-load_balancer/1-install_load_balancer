@@ -4,17 +4,14 @@ sudo apt-get -y update
 sudo apt-get -y install haproxy
 sudo chown  $USER:$USER /etc/haproxy/haproxy.cfg
 
-# Add configuration to haproxy.cfg
 echo "
-frontend tevinmurimiweb
+frontend estebanweb
     bind *:80
     mode http
     default_backend app
-
 backend app
     balance roundrobin
     server 326003-web-01 54.198.64.137:80 check
-    server 326003-web-02 34.239.248.120:80 check" >> /etc/haproxy/haproxy.cfg
+    server 326003-web-02 52.91.147.4:80 check" >> /etc/haproxy/haproxy.cfg
 
-# Restart HAProxy service
 sudo service haproxy restart

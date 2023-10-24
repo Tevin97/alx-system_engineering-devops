@@ -1,47 +1,32 @@
 #!/usr/bin/python3
-
 """
-Script retrieves info about an employee's TODO list progress from a REST API.
+Uses the JSON placeholder api to query data about an employee
 """
 
 import requests
+from sys import argv
 
-
-def get_employee_todo_progress(employee_id):
-    """
-    Retrieves and displays the TODO list progress for a given employee ID.
-
-    Args:
-        employee_id (int): The ID of the employee.
-
-    Returns:
-        None
-    """
-
-    base_url = 'https://jsonplaceholder.typicode.com'
-
-    # Fetching employee information
-    employee_response = requests.get(f'{base_url}/users/{employee_id}')
-    employee_data = employee_response.json()
-    employee_name = employee_data['name']
-
-    # Fetching TODO list for the employee
-    todo_response = requests.get(f'{base_url}/todos?userId={employee_id}')
-    todo_data = todo_response.json()
-
-    # Calculating progress
-    total_tasks = len(todo_data)
-    done_tasks = sum(task['completed'] for task in todo_data)
-    my_cont = "is done with tasks"
-
-    # Printing progress report
-    print(f"Employee {employee_name} {my_cont} ({done_tasks}/{total_tasks}):")
-    for task in todo_data:
-        if task['completed']:
-            print(f"\t{task['title']}")
-
-
-if __name__ == "__main__":
-    # Run the script with an employee ID of your choice
-    employee_id = 1
-    get_employee_todo_progress(employee_id)
+if __name__ == '__main__':
+    main_url = 'https://jsonplaceholder.typicode.com'
+    
+    # Get employee ID from command-line argument
+    if len(argv) < 2:
+        print("Employee ID is required.")
+        exit()
+    
+    employee_id = argv[1]
+    
+    todo_url = f"{main_url}/user/{employee_id}/todos"
+    name_url = f"{main_url}/users/{employee_id}"
+    
+    todo_result = requests.get(todo_url).json()
+    name_result = requests.get(name_url).json()
+    
+    todo_num = len(todo_result)
+    todo_complete = sum(todo.get("completed", False) for todo in todo_result)
+    name = name_result.get("name")
+    
+    print("Employee {} is done with tasks ({}/{})".format(name, todo_complete, todo_num))
+    for todo in todo_result:
+        if todo.get("completed"):
+            print("\t{}".format(todo.get("title")))

@@ -8,7 +8,7 @@ from sys import argv
 
 if __name__ == '__main__':
     main_url = 'https://jsonplaceholder.typicode.com'
- 
+
     # Get employee ID from command-line argument
     if len(argv) < 2:
         print("Employee ID is required.")

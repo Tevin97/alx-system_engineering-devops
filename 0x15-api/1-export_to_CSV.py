@@ -36,5 +36,4 @@ if __name__ == "__main__":
     with open(f"{employee_id}.csv", 'w', newline='') as f:
         header = ["user_ID", "username", "completed", "task"]
         writer = DictWriter(f, fieldnames=header, quoting=QUOTE_ALL)
-        writer.writeheader()
         writer.writerows(todo_list)

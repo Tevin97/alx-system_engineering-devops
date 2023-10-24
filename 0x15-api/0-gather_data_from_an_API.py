@@ -27,7 +27,7 @@ if __name__ == '__main__':
     name = name_result.get("name")
     myS = "is done with tasks"
 
-    print("Employee {} {} ({}/{})".format(name, myS, todo_complete, todo_num))
+    print("Employee {} {}({}/{}):".format(name, myS, todo_complete, todo_num))
     for todo in todo_result:
         if todo.get("completed"):
             print("\t{}".format(todo.get("title")))

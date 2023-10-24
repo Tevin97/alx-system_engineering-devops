@@ -30,4 +30,4 @@ if __name__ == '__main__':
     print("Employee {} {}({}/{}):".format(name, myS, todo_complete, todo_num))
     for todo in todo_result:
         if todo.get("completed"):
-            print("\t{}".format(todo.get("title")))
+            print("\t {}\n".format(todo.get("title")))

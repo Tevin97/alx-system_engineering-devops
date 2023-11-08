@@ -1,3 +1,9 @@
+#!/usr/bin/python3
+"""
+function that queries the Reddit API and returns the number of subscribers
+for a given subreddit
+"""
+
 import requests
 
 def number_of_subscribers(subreddit):
@@ -26,4 +32,3 @@ def number_of_subscribers(subreddit):
         return 0  # Invalid subreddit
     else:
         raise Exception(f"Request failed with status code {response.status_code}")
-

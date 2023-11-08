@@ -1,13 +1,21 @@
 #!/usr/bin/python3
+
 """
-Function that queries the Reddit API and prints
-the top ten hot posts of a subreddit
+Module: reddit_query
+
+This module provides a function to query the Reddit API and print the top ten hot posts of a subreddit.
+
+Usage:
+    count_words(subreddit, word_list)
+
+Example:
+    count_words("python", ["python", "java", "javascript"])
 """
 
 import requests
 
 
-def count_words(subreddit, word_list, after=None, counts={}):
+def count_words(subreddit, word_list, after=None, counts=None):
     """
     Recursively queries the Reddit API, parses the titles
     of all hot articles, and prints a sorted count of given
@@ -19,11 +27,14 @@ def count_words(subreddit, word_list, after=None, counts={}):
         after (str): A token used for pagination
             (default is None).
         counts (dict): A dictionary to store the counts
-            of each keyword (default is an empty dictionary).
+            of each keyword (default is None).
 
     Returns:
         None
     """
+    if counts is None:
+        counts = {}
+
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
     headers = {"User-Agent": "MyAPIAgent"}  # Set a custom User-Agent header
     params = {"after": after} if after else None

@@ -3,7 +3,9 @@
 """
 Module: reddit_query
 
-This module provides a function to query the Reddit API and print the top ten hot posts of a subreddit.
+This module provides a function to query the Reddit API and
+
+print the top ten hot posts of a subreddit.
 
 Usage:
     count_words(subreddit, word_list)

@@ -3,30 +3,32 @@
 of the first 10 hot posts listed for a given subreddit."""
 import requests
 
-
 def top_ten(subreddit):
-    """
-    Prints the titles of the first 10 hot posts
-    for a given subreddit using the Reddit API.
+    """Print the titles of the 10 hottest posts on a given subreddit."""
+    # Construct the URL for the subreddit's hot posts in JSON format
+    url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit)
 
-    Args:
-        subreddit (str): The name of the subreddit.
+    # Define headers for the HTTP request, including User-Agent
+    headers = {
+        "User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"
+    }
 
-    Returns:
-        None
+    # Define parameters for the request, limiting the number of posts to 10
+    params = {
+        "limit": 10
+    }
 
-    """
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-    headers = {"User-Agent": "MyAPIAgent"}  # Set a custom User-Agent header
+    # Send a GET request to the subreddit's hot posts page
+    response = requests.get(url, headers=headers, params=params,
+                            allow_redirects=False)
 
-    response = requests.get(url, headers=headers, allow_redirects=False)
+    # Check if the response status code indicates a not-found error (404)
+    if response.status_code == 404:
+        print("None")
+        return
 
-    if response.status_code == 200:
-        data = response.json()
-        posts = data["data"]["children"]
+    # Parse the JSON response and extract the 'data' section
+    results = response.json().get("data")
 
-        for post in posts[:10]:
-            title = post["data"]["title"]
-            print(title)
-    else:
-        print(None)  # Invalid subreddit or request failed
+    # Print the titles of the top 10 hottest posts
+    [print(c.get("data").get("title")) for c in results.get("children")]

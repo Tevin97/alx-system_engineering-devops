@@ -21,15 +21,13 @@ def number_of_subscribers(subreddit):
     Raises:
         Exception: If the request to the API fails.
     """
-    url = f"https://www.reddit.com/r/{subreddit}/about.json"
-    headers = {"User-Agent": "MyAPIAgent"}  # Set a custom User-Agent header
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    headers = {'User-Agent': 'Mozilla/5.0'}  # Set a custom User-Agent header
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, allow_redirects=False)
 
     if response.status_code == 200:
         data = response.json()
         return data["data"]["subscribers"]
-    elif response.status_code == 404:
-        return 0  # Invalid subreddit
     else:
-        raise Exception(f"Request failed status code {response.status_code}")
+        return 0
